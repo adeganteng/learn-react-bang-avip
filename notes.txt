@@ -1,0 +1,8 @@
+1. Setup React =====================================================================================
+- bisa menggunkan 'npx create-react-app my-app' (Tapi ini tidak di rekomendasikan oleh reactnya langsung)
+- BIsa juga langsung menggunakan Frameworknya seperti nextjs, gatsby, dll
+- Yang direkomendasikan oleh pemula yaitu dengan "vite" yaitu instalasi nya dengan "npm create vite@latest my-app"
+
+- Folder 'public' biasanya untuk menyimpan seperti gambar, mp3, mp4, dll
+- Folder 'src' biasanya untuk menyimpan kode program
+- Vite otomatis terupdate ketika ada perubahan codenya dengan menjalankan "npm run dev"
