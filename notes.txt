@@ -31,3 +31,9 @@
 - biasanya memecah nya didalam folder src kemudian membuat folder baru yang namnaya Component.
 - biasanya untuk pendekatan software engineer menggunakan = element -> Fragments -> template -> pages
 
+
+
+4. Routing ============================================================================================
+- Routing biasanya dilakukan pada pages
+- Routing di react biasanya menggunakan "react-router-dom"
+- untuk mengintalnya di terminal menggunakan "npm install react-router-dom"

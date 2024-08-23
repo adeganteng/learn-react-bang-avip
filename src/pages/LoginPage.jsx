@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import FormLogin from "../components/fragments/FormLogin";
 import AuthLayouts from "../components/layouts/AuthLayouts";
 
@@ -10,7 +11,9 @@ const LoginPage = () => {
 
           <p className="text-slate-300 text-sm mt-8">
             Don't have an account?{" "}
-            <span className="text-black underline">Signup</span>
+            <Link to={"/signup"} className="text-black font-bold underline">
+              Signup
+            </Link>
           </p>
         </AuthLayouts>
       </div>

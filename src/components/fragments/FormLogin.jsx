@@ -24,7 +24,7 @@ const FormLogin = () => {
 
       <Button
         text="Login"
-        variant="bg-slate-300 text-black w-full mt-8 font-bold hover:bg-slate-900 hover:text-white transtion-all"
+        variant="bg-slate-900 text-white w-full mt-8 font-bold hover:bg-slate-800 transtion-all"
       />
     </form>
   );
