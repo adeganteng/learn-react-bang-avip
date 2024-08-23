@@ -41,3 +41,6 @@
 5. Conditional Rendering =================================================================================
 - Misal kita mempunyai sebuah komponen yang sama tapi ingin menampilkan hal yang berbeda dengan suatu kondisi tertentu.
 - Condition bisa menggunakan if, ternary, &&, dll. 
+
+6. Nested Component ====================================================================================
+- Nested Component adalah secara mudahnya yaitu Component di dalam Component.
