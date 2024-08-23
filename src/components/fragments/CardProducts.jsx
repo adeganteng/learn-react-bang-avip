@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const CardProducts = ({ children }) => {
   return (
-    <div className="w-full max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2">
+    <div className="w-full max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between ">
       {children}
     </div>
   );
@@ -16,20 +16,23 @@ const Header = ({ images }) => {
   );
 };
 
-const Body = ({ children, title }) => {
+const Body = ({ description = "", title }) => {
   return (
-    <div className="p-4">
+    <div className="p-4 flex-1 flex flex-col">
       <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
         {title}
       </h5>
-      <p className="mb-3 font-normal text-white">{children}</p>
+      <p className="mb-3 font-normal text-white ">
+        {description.slice(0, 40)}
+        {description.length < 40 ? "" : " . . ."}
+      </p>
     </div>
   );
 };
 
 const Footer = ({ price }) => {
   return (
-    <div className="p-2 pb-4 flex justify-between items-center ">
+    <div className="p-2 pb-4 flex justify-between items-center">
       <span className="text-white text-xl font-bold tracking-tight">
         {price.toLocaleString("id", {
           style: "currency",

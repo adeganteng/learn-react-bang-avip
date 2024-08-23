@@ -1,16 +1,52 @@
 import CardProducts from "../components/fragments/CardProducts";
 
+const products = [
+  {
+    id: 1,
+    title: "Shoes",
+    price: 1000000,
+    description:
+      "This is a shoes product with some description here and more content here.",
+    images: "/images/shoes-1.jpg",
+  },
+  {
+    id: 2,
+    title: "Shoes Adidas",
+    price: 1500000,
+    description:
+      "Adidas is a shoes product with some description here and more content here.",
+    images: "/images/shoes-1.jpg",
+  },
+  {
+    id: 3,
+    title: "Shoes Adidas",
+    price: 1500000,
+    description: "Adidas is a shoes product with some description here.",
+    images: "/images/shoes-1.jpg",
+  },
+  {
+    id: 4,
+    title: "Shoes Adidas",
+    price: 1500000,
+    description:
+      "Adidas is a shoes product with some description here and more content here.",
+    images: "/images/shoes-1.jpg",
+  },
+];
+
 const ProductsPage = () => {
   return (
-    <div className="min-h-screen bg-slate-100 flex  gap-4 justify-center items-center">
-      <CardProducts>
-        <CardProducts.Header images={"/images/shoes-1.jpg"} />
-        <CardProducts.Body title={"New Shoes"}>
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </CardProducts.Body>
-        <CardProducts.Footer price={1000000} />
-      </CardProducts>
+    <div className=" bg-slate-100 p-8 gap-4  flex flex-wrap items-start justify-center">
+      {products.map((product) => (
+        <CardProducts key={product.id}>
+          <CardProducts.Header images={product.images} />
+          <CardProducts.Body
+            title={product.title}
+            description={product.description}
+          />
+          <CardProducts.Footer price={product.price} />
+        </CardProducts>
+      ))}
     </div>
   );
 };
