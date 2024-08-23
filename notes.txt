@@ -6,3 +6,14 @@
 - Folder 'public' biasanya untuk menyimpan seperti gambar, mp3, mp4, dll
 - Folder 'src' biasanya untuk menyimpan kode program
 - Vite otomatis terupdate ketika ada perubahan codenya dengan menjalankan "npm run dev"
+
+
+2. Component & Props ===================================================================================
+- Component yaitu memecah Ui menjadi bagian yang lebih kecil dan bersifat independent dan reusable.
+- Props yaitu data yang dikirim dari parent ke child. Props ini biasanya berupa object, string, dll.
+- Nama Component harus diawali dengan hurf kapital atau PascalCase. Contoh: MyComponent
+- Kenapa harus menggunakan PascalCase? = contoh ketika button nanti kalo penulisannya kecil semua nanti bingung reactnya ini button bawaan html atau Component react.
+- Nama Component tidak boleh sama atau duplikat
+
+- Props / Properties atau juga bisa disebut sebagai parameternya dalam Component
+- children adalah props di react yang bisa menangkap element yang ada di dalamnya.
