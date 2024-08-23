@@ -1,25 +1,4 @@
-//! contoh mendefinisikan Component menggunakan Class Component
-// class Button extends React.Component {
-//   render() {
-//     return (
-//       <button className="h-10 px-6 font-semibold rounded-md bg-black text-white">
-//         Buy Now
-//       </button>
-//     );
-//   }
-// }
-
-//! contoh mendefinisikan Component menggunakan Function Component
-const Button = ({
-  variant = "bg-emerald-700 text-white",
-  text = "Button default",
-}) => {
-  return (
-    <button className={`h-10 px-6 font-semibold rounded-md ${variant}`}>
-      {text}
-    </button>
-  );
-};
+import Button from "./components/elements/button/Button";
 
 function App() {
   return (

@@ -17,3 +17,17 @@
 
 - Props / Properties atau juga bisa disebut sebagai parameternya dalam Component
 - children adalah props di react yang bisa menangkap element yang ada di dalamnya.
+
+3. Atomic Design =======================================================================================
+- Atomic Design adalah metodologi yang di buat oleh Brad frost.
+- Atomic design memiliki lima tahapan yaitu : Atoms -> Molecules -> Organisms -> Templates -> Pages
+- Atoms = bagian yang paling kecil seperti button, text, input , dll
+- Molecules = bagian yang dibentuk oleh Atoms seperti Label bersatu dengan Input.
+- Organisms = bagian yang dibentuk oleh Molecules dan Atoms / Sebauh form yang utuh
+- Templates = bagian yang dibentuk oleh Organisms
+- Pages = bagian yang dibentuk oleh Templates
+- Bedanya template dan pages adalah pages biasanya ditambahkan pada bagian terakhir
+
+- biasanya memecah nya didalam folder src kemudian membuat folder baru yang namnaya Component.
+- biasanya untuk pendekatan software engineer menggunakan = element -> Fragments -> template -> pages
+
