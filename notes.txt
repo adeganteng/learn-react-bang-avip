@@ -37,3 +37,7 @@
 - Routing biasanya dilakukan pada pages
 - Routing di react biasanya menggunakan "react-router-dom"
 - untuk mengintalnya di terminal menggunakan "npm install react-router-dom"
+
+5. Conditional Rendering =================================================================================
+- Misal kita mempunyai sebuah komponen yang sama tapi ingin menampilkan hal yang berbeda dengan suatu kondisi tertentu.
+- Condition bisa menggunakan if, ternary, &&, dll. 
