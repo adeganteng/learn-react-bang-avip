@@ -50,3 +50,7 @@
 - Beda dengan props, kalo props sifatnya immutable kalo state sifatnya mutable 
 - Maksudnya State sifatnya bisa berubah-ubah
 - State ini biasanya digunakan untuk menangani data yang berubah-ubah
+
+- Stateful Component dan Stateless Component
+- Stateful Component = membuat sebuah komponen menggunakan class
+- Stateless Component = membuat sebuah komponen menggunakan function

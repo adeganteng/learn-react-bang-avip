@@ -42,7 +42,7 @@ const FormRegister = () => {
 
       <Button
         text="Register"
-        variant="bg-slate-900 text-white w-full mt-8 font-bold hover:bg-slate-800 hover:text-white transtion-all"
+        variant="bg-slate-900 text-white w-full mt-8 font-bold hover:bg-slate-800 hover:text-white transtion-all rounded-md py-3"
       />
     </form>
   );

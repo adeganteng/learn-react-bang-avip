@@ -35,7 +35,7 @@ const FormLogin = () => {
 
       <Button
         text="Login"
-        variant="bg-slate-900 text-white w-full mt-8 font-bold hover:bg-slate-800 transtion-all"
+        variant="bg-slate-900 text-white w-full mt-8 font-bold hover:bg-slate-800 transtion-all py-3 rounded-md"
         type="submit"
       />
     </form>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Button from "../elements/button/Button";
 
 const CardProducts = ({ children }) => {
   return (
@@ -30,7 +31,7 @@ const Body = ({ description = "", title }) => {
   );
 };
 
-const Footer = ({ price }) => {
+const Footer = ({ price, handleAddToCart, id }) => {
   return (
     <div className="p-2 pb-4 flex justify-between items-center">
       <span className="text-white text-xl font-bold tracking-tight">
@@ -40,9 +41,11 @@ const Footer = ({ price }) => {
           maximumFractionDigits: 0,
         })}
       </span>
-      <button className="bg-black text-xl p-3 text-white rounded-lg">
-        Add to cart
-      </button>
+      <Button
+        onclick={() => handleAddToCart(id)}
+        variant="bg-slate-900 text-white rounded-md py-2 px-4 font-bold hover:bg-slate-800 transtion-all"
+        text="Add to cart"
+      />
     </div>
   );
 };
