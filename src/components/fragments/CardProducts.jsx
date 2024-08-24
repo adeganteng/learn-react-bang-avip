@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const CardProducts = ({ children }) => {
   return (
-    <div className="w-full max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between ">
+    <div className="w-full sm:max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between ">
       {children}
     </div>
   );
