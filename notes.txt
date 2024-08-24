@@ -44,3 +44,9 @@
 
 6. Nested Component ====================================================================================
 - Nested Component adalah secara mudahnya yaitu Component di dalam Component.
+
+7. State Management ===================================================================================
+- State bisa dibilang memori yang dimiliki oleh sebuah komponen
+- Beda dengan props, kalo props sifatnya immutable kalo state sifatnya mutable 
+- Maksudnya State sifatnya bisa berubah-ubah
+- State ini biasanya digunakan untuk menangani data yang berubah-ubah
