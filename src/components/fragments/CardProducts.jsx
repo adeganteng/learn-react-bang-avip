@@ -1,23 +1,26 @@
 import { Link } from "react-router-dom";
 import Button from "../elements/button/Button";
 
-const CardProducts = ({ children }) => {
+const CardProducts = ({ children, id }) => {
   return (
-    <div className="w-full sm:max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between ">
+    <Link
+      to={`/products/${id}`}
+      className="w-full sm:max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between "
+    >
       {children}
-    </div>
+    </Link>
   );
 };
 
 const Header = ({ image }) => {
   return (
-    <Link>
+    <div>
       <img
         src={image}
         alt="Shoes"
         className="overflow-hidden max-h-52 min-h-52 object-center w-full"
       />
-    </Link>
+    </div>
   );
 };
 

@@ -1,3 +1,4 @@
+import DetailProductPage from "./pages/DetailProductPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import ProductsPage from "./pages/ProductsPage";
@@ -13,8 +14,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
 
-        <Route path="/products" element={<ProductsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:id" element={<DetailProductPage />} />
+
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
