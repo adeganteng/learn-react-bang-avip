@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/elements/button/Button";
 import CardProducts from "../components/fragments/CardProducts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const products = [
   {
@@ -39,6 +39,23 @@ const products = [
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("cart")) || []);
+  }, []);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        const findProduct = products.find((product) => product.id === item.id);
+        return acc + findProduct.price * item.qty;
+      }, 0);
+
+      setTotalPrice(sum);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
 
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
@@ -137,6 +154,20 @@ const ProductsPage = () => {
                     </tr>
                   );
                 })}
+                <tr>
+                  <td colSpan={3} className="font-bold text-black ">
+                    <b>Total Price</b>
+                  </td>
+                  <td className="font-bold text-black ">
+                    <b>
+                      {totalPrice.toLocaleString("id", {
+                        style: "currency",
+                        currency: "IDR",
+                        maximumFractionDigits: 0,
+                      })}
+                    </b>
+                  </td>
+                </tr>
               </tbody>
             </table>
           )}
