@@ -1,36 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../elements/button/Button";
 import InputForm from "../elements/input";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { login } from "../../services/auth.service";
 
 const FormLogin = () => {
+  const [loginFailed, setLoginFailed] = useState(false);
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
-    const inputEmail = e.target.email.value;
-    const inputPassword = e.target.password.value;
-    localStorage.setItem("email", inputEmail);
-    localStorage.setItem("password", inputPassword);
-
-    navigate("/products");
+    const data = {
+      username: e.target.username.value,
+      password: e.target.password.value,
+    };
+    login(data, (status, res) => {
+      if (status) {
+        localStorage.setItem("token", res);
+        navigate("/products");
+      } else {
+        setLoginFailed(res.response.data);
+      }
+    });
   };
 
-  const emailRef = useRef(null);
+  const usernameRef = useRef(null);
 
   useEffect(() => {
-    emailRef.current.focus();
+    usernameRef.current.focus();
   }, []);
 
   return (
     <form onSubmit={handleLogin} className="mt-3">
       <InputForm
-        htmlFor={"email"}
-        titleLabel={"Email"}
-        type={"email"}
-        placeholder={"Enter your email"}
-        id={"email"}
+        htmlFor={"username"}
+        titleLabel={"Username"}
+        type={"text"}
+        placeholder={"Enter your username"}
+        id={"username"}
         required={true}
-        ref={emailRef}
+        ref={usernameRef}
       />
 
       <InputForm
@@ -47,6 +55,8 @@ const FormLogin = () => {
         variant="bg-slate-900 text-white w-full mt-8 font-bold hover:bg-slate-800 transtion-all py-3 rounded-md"
         type="submit"
       />
+
+      {loginFailed && <p className="text-red-500 font-bold">{loginFailed}</p>}
     </form>
   );
 };

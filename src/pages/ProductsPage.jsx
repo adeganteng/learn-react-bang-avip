@@ -3,11 +3,13 @@ import Button from "../components/elements/button/Button";
 import CardProducts from "../components/fragments/CardProducts";
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/products.service";
+import { getUsername } from "../services/auth.service";
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
@@ -17,6 +19,11 @@ const ProductsPage = () => {
     getProducts((data) => {
       setProducts(data);
     });
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    token ? setUser(getUsername(token)) : navigate("/login");
   }, []);
 
   useEffect(() => {
@@ -32,10 +39,10 @@ const ProductsPage = () => {
   }, [cart, products]);
 
   const navigate = useNavigate();
-  const email = localStorage.getItem("email");
+
   const handleLogout = () => {
     navigate("/login");
-    localStorage.clear();
+    localStorage.removeItem("token");
   };
 
   const handleAddToCart = (id) => () => {
@@ -61,7 +68,7 @@ const ProductsPage = () => {
 
         <div className="flex gap-4 items-center">
           <p className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
-            {email.slice(0, 10)}...
+            {user}
           </p>
 
           <Button
@@ -91,7 +98,7 @@ const ProductsPage = () => {
             ))}
         </div>
 
-        <div className="flex-1 bg-teal-600 py-8 px-2 text-white border border-teal-600 min-h-screen">
+        <div className="flex-1 bg-teal-600 py-8 px-2 text-white border border-teal-600 ">
           <h1 className="text-3xl font-bold text-white text-center">CART</h1>
           {cart.length > 0 && (
             <table className="mt-4 table-auto border-separate border-spacing-x-5 mx-auto">
