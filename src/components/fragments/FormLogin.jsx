@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../elements/button/Button";
 import InputForm from "../elements/input";
+import { useEffect, useRef } from "react";
 
 const FormLogin = () => {
   const navigate = useNavigate();
@@ -13,6 +14,13 @@ const FormLogin = () => {
 
     navigate("/products");
   };
+
+  const emailRef = useRef(null);
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
   return (
     <form onSubmit={handleLogin} className="mt-3">
       <InputForm
@@ -22,6 +30,7 @@ const FormLogin = () => {
         placeholder={"Enter your email"}
         id={"email"}
         required={true}
+        ref={emailRef}
       />
 
       <InputForm
