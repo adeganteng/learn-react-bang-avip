@@ -15,7 +15,7 @@ const Header = ({ image }) => {
       <img
         src={image}
         alt="Shoes"
-        className="overflow-hidden max-h-52 object-center w-full"
+        className="overflow-hidden max-h-52 min-h-52 object-center w-full"
       />
     </Link>
   );

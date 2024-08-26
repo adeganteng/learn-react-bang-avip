@@ -1,15 +1,17 @@
-import { useNavigate } from "react-router-dom";
 import Button from "../components/elements/button/Button";
 import CardProducts from "../components/fragments/CardProducts";
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/products.service";
-import { getUsername } from "../services/auth.service";
+import { useLogin } from "../hooks/useLogin";
+import { useLogout } from "../hooks/useLogout";
+import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
-  const [user, setUser] = useState("");
+
+  const user = useLogin();
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
@@ -19,11 +21,6 @@ const ProductsPage = () => {
     getProducts((data) => {
       setProducts(data);
     });
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    token ? setUser(getUsername(token)) : navigate("/login");
   }, []);
 
   useEffect(() => {
@@ -38,12 +35,7 @@ const ProductsPage = () => {
     }
   }, [cart, products]);
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    navigate("/login");
-    localStorage.removeItem("token");
-  };
+  const { handleLogout } = useLogout();
 
   const handleAddToCart = (id) => () => {
     const findId = cart.find((item) => item.id === id);
@@ -70,6 +62,10 @@ const ProductsPage = () => {
           <p className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
             {user}
           </p>
+
+          <Link to="/profile" className="text-white font-bold underline">
+            Profile
+          </Link>
 
           <Button
             type="button"

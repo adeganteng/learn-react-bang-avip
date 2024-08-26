@@ -1,6 +1,7 @@
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import ProductsPage from "./pages/ProductsPage";
+import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 
 import { Routes, Route } from "react-router-dom";
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signup" element={<RegisterPage />} />
 
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
