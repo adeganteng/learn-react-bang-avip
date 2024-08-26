@@ -9,10 +9,14 @@ const CardProducts = ({ children }) => {
   );
 };
 
-const Header = ({ images }) => {
+const Header = ({ image }) => {
   return (
     <Link>
-      <img src={images} alt="Shoes" className="overflow-hidden" />
+      <img
+        src={image}
+        alt="Shoes"
+        className="overflow-hidden max-h-52 object-center w-full"
+      />
     </Link>
   );
 };
@@ -21,7 +25,7 @@ const Body = ({ description = "", title }) => {
   return (
     <div className="p-4 flex-1 flex flex-col">
       <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
-        {title}
+        {title.slice(0, 15)}...
       </h5>
       <p className="mb-3 font-normal text-white ">
         {description.slice(0, 40)}
@@ -35,10 +39,9 @@ const Footer = ({ price, handleAddToCart, id }) => {
   return (
     <div className="p-2 pb-4 flex justify-between items-center">
       <span className="text-white text-xl font-bold tracking-tight">
-        {price.toLocaleString("id", {
+        {price.toLocaleString("us", {
           style: "currency",
-          currency: "IDR",
-          maximumFractionDigits: 0,
+          currency: "USD",
         })}
       </span>
       <Button

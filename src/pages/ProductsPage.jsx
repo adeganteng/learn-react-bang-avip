@@ -2,51 +2,25 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/elements/button/Button";
 import CardProducts from "../components/fragments/CardProducts";
 import { useEffect, useState } from "react";
-
-const products = [
-  {
-    id: 1,
-    title: "Shoes",
-    price: 1000000,
-    description:
-      "This is a shoes product with some description here and more content here.",
-    images: "/images/shoes-1.jpg",
-  },
-  {
-    id: 2,
-    title: "Shoes Adidas",
-    price: 1500000,
-    description:
-      "Adidas is a shoes product with some description here and more content here.",
-    images: "/images/shoes-1.jpg",
-  },
-  {
-    id: 3,
-    title: "Shoes Adidas",
-    price: 1500000,
-    description: "Adidas is a shoes product with some description here.",
-    images: "/images/shoes-1.jpg",
-  },
-  {
-    id: 4,
-    title: "Shoes Adidas",
-    price: 1500000,
-    description:
-      "Adidas is a shoes product with some description here and more content here.",
-    images: "/images/shoes-1.jpg",
-  },
-];
+import { getProducts } from "../services/products.service";
 
 const ProductsPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
   }, []);
 
   useEffect(() => {
-    if (cart.length > 0) {
+    getProducts((data) => {
+      setProducts(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (products.length > 0 && cart.length > 0) {
       const sum = cart.reduce((acc, item) => {
         const findProduct = products.find((product) => product.id === item.id);
         return acc + findProduct.price * item.qty;
@@ -55,7 +29,7 @@ const ProductsPage = () => {
       setTotalPrice(sum);
       localStorage.setItem("cart", JSON.stringify(cart));
     }
-  }, [cart]);
+  }, [cart, products]);
 
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
@@ -100,23 +74,24 @@ const ProductsPage = () => {
       </header>
       <div className=" bg-slate-100 gap-4  flex justify-center">
         <div className="flex-1 flex flex-wrap items-start justify-start px-4 py-8 gap-4">
-          {products.map((product) => (
-            <CardProducts key={product.id}>
-              <CardProducts.Header images={product.images} />
-              <CardProducts.Body
-                title={product.title}
-                description={product.description}
-              />
-              <CardProducts.Footer
-                id={product.id}
-                price={product.price}
-                handleAddToCart={handleAddToCart(product.id)}
-              />
-            </CardProducts>
-          ))}
+          {products?.length > 0 &&
+            products?.map((product) => (
+              <CardProducts key={product.id}>
+                <CardProducts.Header image={product.image} />
+                <CardProducts.Body
+                  title={product.title}
+                  description={product.description}
+                />
+                <CardProducts.Footer
+                  id={product.id}
+                  price={product.price}
+                  handleAddToCart={handleAddToCart(product.id)}
+                />
+              </CardProducts>
+            ))}
         </div>
 
-        <div className="flex-1 bg-teal-600 py-8 px-2 text-white border border-teal-600">
+        <div className="flex-1 bg-teal-600 py-8 px-2 text-white border border-teal-600 min-h-screen">
           <h1 className="text-3xl font-bold text-white text-center">CART</h1>
           {cart.length > 0 && (
             <table className="mt-4 table-auto border-separate border-spacing-x-5 mx-auto">
@@ -129,41 +104,39 @@ const ProductsPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {cart.map((item, index) => {
-                  const product = products.find(
-                    (product) => product.id === item.id
-                  );
-                  return (
-                    <tr key={index}>
-                      <td>{product.title}</td>
-                      <td>
-                        {product.price.toLocaleString("id", {
-                          style: "currency",
-                          currency: "IDR",
-                          maximumFractionDigits: 0,
-                        })}
-                      </td>
-                      <td>{item.qty}</td>
-                      <td>
-                        {(product.price * item.qty).toLocaleString("id", {
-                          style: "currency",
-                          currency: "IDR",
-                          maximumFractionDigits: 0,
-                        })}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {products.length > 0 &&
+                  cart.map((item, index) => {
+                    const product = products.find(
+                      (product) => product.id === item.id
+                    );
+                    return (
+                      <tr key={index}>
+                        <td>{product.title.substring(0, 10)}...</td>
+                        <td>
+                          {product.price.toLocaleString("us", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
+                        </td>
+                        <td>{item.qty}</td>
+                        <td>
+                          {(product.price * item.qty).toLocaleString("us", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 <tr>
                   <td colSpan={3} className="font-bold text-black ">
                     <b>Total Price</b>
                   </td>
                   <td className="font-bold text-black ">
                     <b>
-                      {totalPrice.toLocaleString("id", {
+                      {totalPrice.toLocaleString("us", {
                         style: "currency",
-                        currency: "IDR",
-                        maximumFractionDigits: 0,
+                        currency: "USD",
                       })}
                     </b>
                   </td>
