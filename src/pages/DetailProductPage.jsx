@@ -23,8 +23,6 @@ const DetailProductPage = () => {
     }
   }, [id]);
 
-  console.log(product);
-
   return (
     <>
       <header className="flex justify-between items-center bg-teal-600 border border-b-teal-600 py-8 px-6 lg:px-36">
@@ -71,7 +69,7 @@ const DetailProductPage = () => {
               })}
             </h1>
           </div>
-          <div className="w-full px-4">
+          <div className="w-full px-4 ">
             <p className="text-xl my-4 font-semibold text-slate-700">
               {product?.description}
             </p>

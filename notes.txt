@@ -54,3 +54,6 @@
 - Stateful Component dan Stateless Component
 - Stateful Component = membuat sebuah komponen menggunakan class
 - Stateless Component = membuat sebuah komponen menggunakan function
+
+8. Redux ===============================================================================================
+- Funsi dari state management adalah memudahkan untuk mengirimkan state tanpa harus menggunakan props
