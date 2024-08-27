@@ -1,13 +1,16 @@
 import CardProducts from "../components/fragments/CardProducts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getProducts } from "../services/products.service";
 import { useLogin } from "../hooks/useLogin";
 
 import TableCart from "../components/fragments/TableCart";
 import Navbar from "../components/layouts/Navbar";
+import { DarkmodeContext } from "../context/Darkmode";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+
+  const { isDarkmode } = useContext(DarkmodeContext);
 
   useLogin();
 
@@ -20,12 +23,16 @@ const ProductsPage = () => {
   return (
     <>
       <Navbar />
-      <div className=" bg-slate-100 gap-4  flex justify-center">
+      <div
+        className={`bg-slate-100 gap-4  flex justify-center ${
+          isDarkmode && "bg-slate-950"
+        }`}
+      >
         <div className="flex-1 flex flex-wrap items-start justify-start px-4 py-8 gap-4">
           {products?.length > 0 &&
             products?.map((product) => (
-              <CardProducts key={product.id} id={product.id}>
-                <CardProducts.Header image={product.image} />
+              <CardProducts key={product.id}>
+                <CardProducts.Header image={product.image} id={product.id} />
                 <CardProducts.Body
                   title={product.title}
                   description={product.description}

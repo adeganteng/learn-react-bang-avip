@@ -1,13 +1,17 @@
 import { useLogin } from "../hooks/useLogin";
 import Navbar from "../components/layouts/Navbar";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getProducts } from "../services/products.service";
+import { DarkmodeContext } from "../context/Darkmode";
 
 const ProfilePage = () => {
   const [totalCart, setTotalCart] = useState(0);
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const { isDarkmode } = useContext(DarkmodeContext);
+
   const user = useLogin();
 
   useEffect(() => {
@@ -38,7 +42,11 @@ const ProfilePage = () => {
     <>
       <Navbar />
 
-      <div className="w-full min-h-screen flex flex-col gap-4 items-center justify-center">
+      <div
+        className={`w-full min-h-screen flex flex-col gap-4 items-center justify-center ${
+          isDarkmode && "bg-slate-950 text-white"
+        }`}
+      >
         <h1 className="text-3xl font-bold">Hello {user}</h1>
         <p className="text-2xl font-semibold">
           Jumlah keranjang anda : {totalCart}

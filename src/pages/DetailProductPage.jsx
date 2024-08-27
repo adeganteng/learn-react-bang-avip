@@ -1,17 +1,18 @@
-import { Link, useParams } from "react-router-dom";
-import Button from "../components/elements/button/Button";
 import { useLogin } from "../hooks/useLogin";
-import { useLogout } from "../hooks/useLogout";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getDetailProduct } from "../services/products.service";
+import { DarkmodeContext } from "../context/Darkmode";
+import Navbar from "../components/layouts/Navbar";
+import { useParams } from "react-router-dom";
 
 const DetailProductPage = () => {
-  const user = useLogin();
-  const { handleLogout } = useLogout();
+  useLogin();
 
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
+
+  const { isDarkmode } = useContext(DarkmodeContext);
 
   useEffect(() => {
     if (id) {
@@ -25,37 +26,20 @@ const DetailProductPage = () => {
 
   return (
     <>
-      <header className="flex justify-between items-center bg-teal-600 border border-b-teal-600 py-8 px-6 lg:px-36">
-        <h1 className="text-4xl font-extrabold">
-          My<span className="text-white">Store</span>
-        </h1>
+      <Navbar />
 
-        <div className="flex gap-4 items-center">
-          <p className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
-            {user}
-          </p>
-
-          <Link to="/products" className="text-black font-bold underline">
-            Products
-          </Link>
-
-          <Button
-            type="button"
-            text="Logout"
-            variant="bg-red-500 text-white rounded-full px-4 py-2 font-bold hover:bg-red-600 transtion-all"
-            onclick={handleLogout}
-          />
-        </div>
-      </header>
-
-      <div className="w-full min-h-screen flex  items-center p-10 flex-col">
+      <div
+        className={`w-full min-h-screen flex  items-center p-10 flex-col ${
+          isDarkmode && "bg-slate-950 text-white"
+        }`}
+      >
         <h1 className="text-3xl font-bold">{product?.title}</h1>
 
         <div className="w-full max-w-6xl flex justify-center flex-col p-4">
           <img
             src={product?.image}
             alt={product?.title}
-            className="w-96 object-center mx-auto"
+            className="w-96 object-center mx-auto p-3 bg-teal-600 rounded-xl"
           />
 
           <div className="flex items-start justify-between mt-8">

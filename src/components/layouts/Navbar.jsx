@@ -2,11 +2,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import Button from "../elements/button/Button";
 import { useLogout } from "../../hooks/useLogout";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { DarkmodeContext } from "../../context/Darkmode";
 
 const Navbar = () => {
   const [totalCart, setTotalCart] = useState(0);
+
+  const { isDarkmode, setIsDarkmode } = useContext(DarkmodeContext);
 
   const user = useLogin();
   const handleLogout = useLogout();
@@ -51,6 +54,14 @@ const Navbar = () => {
         <div className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
           {totalCart}
         </div>
+        <button
+          className={`rounded-xl font-bold text-base p-2  ${
+            isDarkmode ? "bg-white text-black" : " bg-black  text-white"
+          }`}
+          onClick={() => setIsDarkmode(!isDarkmode)}
+        >
+          {isDarkmode ? "Light" : "Dark"}
+        </button>
       </div>
     </header>
   );

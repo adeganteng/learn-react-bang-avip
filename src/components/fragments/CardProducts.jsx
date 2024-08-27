@@ -3,20 +3,17 @@ import Button from "../elements/button/Button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
 
-const CardProducts = ({ children, id }) => {
+const CardProducts = ({ children }) => {
   return (
-    <div
-      to={`/products/${id}`}
-      className="w-full sm:max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between "
-    >
+    <div className="w-full sm:max-w-xs bg-teal-500 border-teal-800 rounded-lg shadow-lg shadow-teal-700 p-2 flex flex-col justify-between ">
       {children}
     </div>
   );
 };
 
-const Header = ({ image }) => {
+const Header = ({ image, id }) => {
   return (
-    <Link>
+    <Link to={`/products/${id}`}>
       <img
         src={image}
         alt="Shoes"
