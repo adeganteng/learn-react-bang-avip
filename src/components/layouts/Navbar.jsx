@@ -5,6 +5,7 @@ import { useLogout } from "../../hooks/useLogout";
 import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { DarkmodeContext } from "../../context/Darkmode";
+import { useTotalPrice } from "../../hooks/useTotalPrice";
 
 const Navbar = () => {
   const [totalCart, setTotalCart] = useState(0);
@@ -16,6 +17,7 @@ const Navbar = () => {
 
   const location = useLocation();
   const cart = useSelector((state) => state.cart.data);
+  const { total } = useTotalPrice();
   useEffect(() => {
     const sum = cart.reduce((acc, item) => {
       return acc + item.qty;
@@ -52,7 +54,8 @@ const Navbar = () => {
           onclick={handleLogout}
         />
         <div className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
-          {totalCart}
+          item: {totalCart} |{" "}
+          {total.toLocaleString("us", { style: "currency", currency: "USD" })}
         </div>
         <button
           className={`rounded-xl font-bold text-base p-2  ${

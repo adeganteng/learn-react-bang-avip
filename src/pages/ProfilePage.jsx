@@ -2,23 +2,17 @@ import { useLogin } from "../hooks/useLogin";
 import Navbar from "../components/layouts/Navbar";
 import { useSelector } from "react-redux";
 import { useContext, useEffect, useState } from "react";
-import { getProducts } from "../services/products.service";
 import { DarkmodeContext } from "../context/Darkmode";
+import { useTotalPrice } from "../hooks/useTotalPrice";
 
 const ProfilePage = () => {
   const [totalCart, setTotalCart] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   const { isDarkmode } = useContext(DarkmodeContext);
 
   const user = useLogin();
 
-  useEffect(() => {
-    getProducts((data) => {
-      setProducts(data);
-    });
-  }, []);
+  const { total } = useTotalPrice();
 
   const cart = useSelector((state) => state.cart.data);
   useEffect(() => {
@@ -28,16 +22,6 @@ const ProfilePage = () => {
     setTotalCart(sum);
   }, [cart]);
 
-  useEffect(() => {
-    if (products.length > 0 && cart.length > 0) {
-      const sum = cart.reduce((acc, item) => {
-        const findProduct = products.find((product) => product.id === item.id);
-        return acc + findProduct.price * item.qty;
-      }, 0);
-
-      setTotalPrice(sum);
-    }
-  }, [cart, products]);
   return (
     <>
       <Navbar />
@@ -53,7 +37,7 @@ const ProfilePage = () => {
         </p>
         <p className="text-2xl font-semibold">
           Total belanja anda{" "}
-          {totalPrice.toLocaleString("us", {
+          {total.toLocaleString("us", {
             style: "currency",
             currency: "USD",
           })}
