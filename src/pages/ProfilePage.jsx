@@ -1,39 +1,55 @@
 import { useLogin } from "../hooks/useLogin";
-import Button from "../components/elements/button/Button";
-import { useLogout } from "../hooks/useLogout";
-import { Link } from "react-router-dom";
+import Navbar from "../components/layouts/Navbar";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getProducts } from "../services/products.service";
 
 const ProfilePage = () => {
-  const { handleLogout } = useLogout();
+  const [totalCart, setTotalCart] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const user = useLogin();
+
+  useEffect(() => {
+    getProducts((data) => {
+      setProducts(data);
+    });
+  }, []);
+
+  const cart = useSelector((state) => state.cart.data);
+  useEffect(() => {
+    const sum = cart.reduce((acc, item) => {
+      return acc + item.qty;
+    }, 0);
+    setTotalCart(sum);
+  }, [cart]);
+
+  useEffect(() => {
+    if (products.length > 0 && cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        const findProduct = products.find((product) => product.id === item.id);
+        return acc + findProduct.price * item.qty;
+      }, 0);
+
+      setTotalPrice(sum);
+    }
+  }, [cart, products]);
   return (
     <>
-      {/* Header */}
-      <header className="flex justify-between items-center bg-teal-600 border border-b-teal-600 py-8 px-6 lg:px-36">
-        <h1 className="text-4xl font-extrabold">
-          My<span className="text-white">Store</span>
-        </h1>
+      <Navbar />
 
-        <div className="flex gap-4 items-center">
-          <p className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
-            {user}
-          </p>
-
-          <Link to="/products" className="text-black font-bold underline">
-            Products
-          </Link>
-
-          <Button
-            type="button"
-            text="Logout"
-            variant="bg-red-500 text-white rounded-full px-4 py-2 font-bold hover:bg-red-600 transtion-all"
-            onclick={handleLogout}
-          />
-        </div>
-      </header>
-
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <h1 className="text-3xl font-bold">My name is {user}</h1>
+      <div className="w-full min-h-screen flex flex-col gap-4 items-center justify-center">
+        <h1 className="text-3xl font-bold">Hello {user}</h1>
+        <p className="text-2xl font-semibold">
+          Jumlah keranjang anda : {totalCart}
+        </p>
+        <p className="text-2xl font-semibold">
+          Total belanja anda{" "}
+          {totalPrice.toLocaleString("us", {
+            style: "currency",
+            currency: "USD",
+          })}
+        </p>
       </div>
     </>
   );

@@ -1,21 +1,15 @@
-import Button from "../components/elements/button/Button";
 import CardProducts from "../components/fragments/CardProducts";
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/products.service";
 import { useLogin } from "../hooks/useLogin";
-import { useLogout } from "../hooks/useLogout";
-import { Link } from "react-router-dom";
+
+import TableCart from "../components/fragments/TableCart";
+import Navbar from "../components/layouts/Navbar";
 
 const ProductsPage = () => {
-  const [cart, setCart] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
 
-  const user = useLogin();
-
-  useEffect(() => {
-    setCart(JSON.parse(localStorage.getItem("cart")) || []);
-  }, []);
+  useLogin();
 
   useEffect(() => {
     getProducts((data) => {
@@ -23,58 +17,9 @@ const ProductsPage = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (products.length > 0 && cart.length > 0) {
-      const sum = cart.reduce((acc, item) => {
-        const findProduct = products.find((product) => product.id === item.id);
-        return acc + findProduct.price * item.qty;
-      }, 0);
-
-      setTotalPrice(sum);
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart, products]);
-
-  const { handleLogout } = useLogout();
-
-  const handleAddToCart = (id) => () => {
-    const findId = cart.find((item) => item.id === id);
-
-    if (findId) {
-      setCart(
-        cart.map((item) =>
-          item.id === id ? { ...item, qty: item.qty + 1 } : item
-        )
-      );
-    } else {
-      setCart([...cart, { id, qty: 1 }]);
-    }
-  };
-
   return (
     <>
-      <header className="flex justify-between items-center bg-teal-600 border border-b-teal-600 py-8 px-6 lg:px-36">
-        <h1 className="text-4xl font-extrabold">
-          My<span className="text-white">Store</span>
-        </h1>
-
-        <div className="flex gap-4 items-center">
-          <p className="bg-white text-black text-xl p-4 py-2 rounded-full font-bold">
-            {user}
-          </p>
-
-          <Link to="/profile" className="text-white font-bold underline">
-            Profile
-          </Link>
-
-          <Button
-            type="button"
-            text="Logout"
-            variant="bg-red-500 text-white rounded-full px-4 py-2 font-bold hover:bg-red-600 transtion-all"
-            onclick={handleLogout}
-          />
-        </div>
-      </header>
+      <Navbar />
       <div className=" bg-slate-100 gap-4  flex justify-center">
         <div className="flex-1 flex flex-wrap items-start justify-start px-4 py-8 gap-4">
           {products?.length > 0 &&
@@ -85,68 +30,14 @@ const ProductsPage = () => {
                   title={product.title}
                   description={product.description}
                 />
-                <CardProducts.Footer
-                  id={product.id}
-                  price={product.price}
-                  handleAddToCart={handleAddToCart(product.id)}
-                />
+                <CardProducts.Footer id={product.id} price={product.price} />
               </CardProducts>
             ))}
         </div>
 
         <div className="flex-1 bg-teal-600 py-8 px-2 text-white border border-teal-600 ">
           <h1 className="text-3xl font-bold text-white text-center">CART</h1>
-          {cart.length > 0 && (
-            <table className="mt-4 table-auto border-separate border-spacing-x-5 mx-auto">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Price</th>
-                  <th>Qty</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.length > 0 &&
-                  cart.map((item, index) => {
-                    const product = products.find(
-                      (product) => product.id === item.id
-                    );
-                    return (
-                      <tr key={index}>
-                        <td>{product.title.substring(0, 10)}...</td>
-                        <td>
-                          {product.price.toLocaleString("us", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                        </td>
-                        <td>{item.qty}</td>
-                        <td>
-                          {(product.price * item.qty).toLocaleString("us", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                <tr>
-                  <td colSpan={3} className="font-bold text-black ">
-                    <b>Total Price</b>
-                  </td>
-                  <td className="font-bold text-black ">
-                    <b>
-                      {totalPrice.toLocaleString("us", {
-                        style: "currency",
-                        currency: "USD",
-                      })}
-                    </b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          )}
+          <TableCart products={products} />
         </div>
       </div>
     </>
